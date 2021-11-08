@@ -10,13 +10,6 @@ cameraButton.addEventListener('click', camera);
 recordStartButton.addEventListener('click', startRecord);
 recordStopButton.addEventListener('click', stopRecord);
 
-if (!supported()) {
-  console.error("Browser does not support this functionality!")
-  document.getElementById("error").innerHTML = 'Browser not supported <a href="https://caniuse.com/#search=captureStream">Info</a>';
-} else {
-  enableStartButtons();
-}
-
 var mediaRecorder;
 var chunks = [];
 
@@ -31,7 +24,6 @@ async function screen() {
   const stream = await navigator.mediaDevices.getDisplayMedia({ audio: true, video: true });
   console.log('Received local screen stream');
   stream.replaceVideoTrack(stream.getVideoTracks()[0])
-  enableButtons()
 }
 
 async function camera() {
@@ -39,17 +31,6 @@ async function camera() {
   console.log('Received local screen stream');
   stream.replaceVideoTrack(stream.getVideoTracks()[0])
   stream.replaceAudioTrack(stream.getAudioTracks()[0])
-  enableButtons()
-}
-
-async function enableButtons() {
-  recordStartButton.disabled = false;
-  recordStopButton.disabled = false;
-}
-
-function enableStartButtons() {
-  screenButton.disabled = false;
-  cameraButton.disabled = false;
 }
 
 async function startRecord() {
@@ -61,13 +42,11 @@ async function startRecord() {
   mediaRecorder.onstop = onStop;
   mediaRecorder.start();
   recordStartButton.style.background = "red";
-  recordStartButton.style.color = "black";
 }
 
 async function stopRecord() {
   mediaRecorder.stop();
   recordStartButton.style.background = "";
-  recordStartButton.style.color = "";
 }
 
 function onStop(e) {
