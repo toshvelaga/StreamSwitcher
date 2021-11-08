@@ -2,13 +2,11 @@
 
 const screenButton = document.getElementById('screenButton');
 const cameraButton = document.getElementById('cameraButton');
-const videoButton = document.getElementById('videoButton');
 const recordStartButton = document.getElementById('recordStartButton');
 const recordStopButton = document.getElementById('recordStopButton');
 
 screenButton.addEventListener('click', screen);
 cameraButton.addEventListener('click', camera);
-videoButton.addEventListener('click', video);
 recordStartButton.addEventListener('click', startRecord);
 recordStopButton.addEventListener('click', stopRecord);
 
@@ -24,20 +22,10 @@ var chunks = [];
 
 const remoteVideo = document.getElementById('remoteVideo');
 var tempStream = new MediaStream();
+
 setTimeout(function () {
   remoteVideo.srcObject = tempStream.remoteStream;
-  remoteVideo.play();
 }, 500);
-
-async function video() {
-  const video = document.getElementById("localVideo");
-  video.play();
-  const stream = video.captureStream();
-  console.log('Received local video stream');
-  stream.replaceVideoTrack(stream.getVideoTracks()[0])
-  stream.replaceAudioTrack(stream.getAudioTracks()[0])
-  enableButtons()
-}
 
 async function screen() {
   const stream = await navigator.mediaDevices.getDisplayMedia({ audio: true, video: true });
@@ -57,12 +45,10 @@ async function camera() {
 async function enableButtons() {
   recordStartButton.disabled = false;
   recordStopButton.disabled = false;
-  pipButton.disabled = false;
 }
 
 function enableStartButtons() {
   screenButton.disabled = false;
-  videoButton.disabled = false;
   cameraButton.disabled = false;
 }
 
