@@ -5,14 +5,12 @@ const cameraButton = document.getElementById('cameraButton');
 const videoButton = document.getElementById('videoButton');
 const recordStartButton = document.getElementById('recordStartButton');
 const recordStopButton = document.getElementById('recordStopButton');
-const pipButton = document.getElementById('pipButton');
 
 screenButton.addEventListener('click', screen);
 cameraButton.addEventListener('click', camera);
 videoButton.addEventListener('click', video);
 recordStartButton.addEventListener('click', startRecord);
 recordStopButton.addEventListener('click', stopRecord);
-pipButton.addEventListener('click', requestPiP);
 
 if (!supported()) {
   console.error("Browser does not support this functionality!")
@@ -102,12 +100,6 @@ function onStop(e) {
   chunks = [];
 }
 
-async function requestPiP() {
-  if (remoteVideo !== document.pictureInPictureElement) {
-    await remoteVideo.requestPictureInPicture();
-  } else {
-    await document.exitPictureInPicture();
-  }
-}
+
 
 
