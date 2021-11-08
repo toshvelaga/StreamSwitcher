@@ -22,13 +22,11 @@ setTimeout(function () {
 
 async function screen() {
   const stream = await navigator.mediaDevices.getDisplayMedia({ audio: true, video: true });
-  console.log('Received local screen stream');
   stream.replaceVideoTrack(stream.getVideoTracks()[0])
 }
 
 async function camera() {
   const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
-  console.log('Received local screen stream');
   stream.replaceVideoTrack(stream.getVideoTracks()[0])
   stream.replaceAudioTrack(stream.getAudioTracks()[0])
 }
@@ -36,17 +34,15 @@ async function camera() {
 async function startRecord() {
   mediaRecorder = new MediaRecorder(remoteVideo.captureStream());
   mediaRecorder.ondataavailable = function (e) {
-    console.log("Added Data");
+    console.log(e.data);
     chunks.push(e.data);
   }
   mediaRecorder.onstop = onStop;
   mediaRecorder.start();
-  recordStartButton.style.background = "red";
 }
 
 async function stopRecord() {
   mediaRecorder.stop();
-  recordStartButton.style.background = "";
 }
 
 function onStop(e) {
